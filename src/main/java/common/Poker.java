@@ -12,7 +12,7 @@ public class Poker {
 	int card_index=0;
 	int num_card=0;
 	BufferedReader br;
-	int winner = -1;//0 is player and 1 is AIP
+	public int winner = -1;//0 is player and 1 is AIP
 	
 	int[] cardnumbercount = new int[13];
 	int[] cardcolorcount = new int[4];

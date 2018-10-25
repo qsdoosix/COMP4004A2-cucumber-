@@ -1,9 +1,13 @@
 package cucumber;
 
+import static org.junit.Assert.assertEquals;
+
 import common.Poker;
 import cucumber.api.PendingException;
 import cucumber.api.java.en.Given;
+import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import junit.framework.TestCase;
 
 public class StepDefs {
 	protected common.Poker game = new Poker();
@@ -57,4 +61,17 @@ public class StepDefs {
 	public void player_have_D(int arg1) throws Exception {
 		game.givecardP('D', 10);
 	}
+
+	@Then("^AIP should win$")
+	public void aip_should_win() throws Exception {
+		game.compareHand();
+		assertEquals(game.winner,1);
+	}
+	
+	@Then("^Player should win$")
+	public void player_should_win() throws Exception {
+		game.compareHand();
+		assertEquals(game.winner,0);
+	}
+
 }
