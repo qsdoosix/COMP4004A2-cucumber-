@@ -6,5 +6,9 @@ Feature: Test the correctness of poker game program about detecting the royal fl
     And AIP have CQ
     And AIP have CJ
     And AIP have C10
-    When I complete action
+    When Player have D10
+    And Player have DJ
+    And Player have DQ
+    And Player have DK
+    And Player have DA
     Then I validate the outcomes
