@@ -19,9 +19,9 @@ Feature: Test the correctness of poker game program about detecting the royal fl
     And AIP have HJ
     And AIP have H10
     And AIP have HA
-    When Player have DA
-    And Player have D10
-    And Player have DJ
-    And Player have DQ
-    And Player have DK
+    When Player have SA
+    And Player have S10
+    And Player have SJ
+    And Player have SQ
+    And Player have SK
     Then Player should win

@@ -708,7 +708,6 @@ public class Poker {
 		}else {
 			enemyS=max.number*10-list.indexOf(max.color);
 		}
-		System.out.println(playerS+", "+enemyS);
 		if(playerS>enemyS) {
 			winner=0;
 			System.out.println("Player wins!");
@@ -718,19 +717,36 @@ public class Poker {
 		}
 	}
 	public void clearhand() {
-		Card[] player_hand= new Card[5];
-		Card[] enemy_hand = new Card[5];
 		int numcardplayer=0;
 		int numcardenemy=0;
 	}
-	public void givecardP(char c, int n) {
+	public void givecardP(Card c) {
 		if(numcardplayer>=5)clearhand();
-		player_hand[numcardplayer]=new Card(c,n);
+		player_hand[numcardplayer]=c;
 		numcardplayer++;
 	}
-	public void givecardAIP(char c, int n) {
+	public void givecardAIP(Card c) {
 		if(numcardenemy>=5)clearhand();
-		enemy_hand[numcardenemy]=new Card(c,n);
+		enemy_hand[numcardenemy]=c;
 		numcardenemy++;
+	}
+	public Card cardcreator(String s) {
+		char c = s.charAt(0);
+		int n;
+		if(s.charAt(1)=='A') {
+			n=1;
+		}else if(s.charAt(1)=='1'&&s.length()==3) {
+			n=10+Character.getNumericValue(s.charAt(2));//Interpret 10,11,12,13 as 10,J,Q,K
+		}else if(s.charAt(1)=='J') {
+			n=11;
+		}else if(s.charAt(1)=='Q') {
+			n=12;
+		}else if(s.charAt(1)=='K') {
+			n=13;
+		}else {
+			//In this code '1' and 'A' is both considered as Ace, as it won't cause any confusion.
+			n=Character.getNumericValue(s.charAt(1));
+		}
+		return new Card(c,n);
 	}
 }
