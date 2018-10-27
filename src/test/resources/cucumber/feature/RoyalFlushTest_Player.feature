@@ -39,11 +39,11 @@ Feature: Test the Royal flush beats any other hands on AIP
     And AIP have C4
     And AIP have S4
     And AIP have D5
-    When Player have S10
-    And Player have SQ
-    And Player have SA
-    And Player have SJ
-    And Player have SK
+    When Player have C10
+    And Player have CQ
+    And Player have CA
+    And Player have CJ
+    And Player have CK
     Then Player should win
     And Player holds RoyalFlush
     And AIP holds FourOFAKind
@@ -55,11 +55,11 @@ Feature: Test the Royal flush beats any other hands on AIP
     And AIP have C6
     And AIP have S7
     And AIP have D8
-    When Player have C10
-    And Player have CJ
-    And Player have CK
-    And Player have CQ
-    And Player have CA
+    When Player have D10
+    And Player have DJ
+    And Player have DK
+    And Player have DQ
+    And Player have DA
     Then Player should win
     And Player holds RoyalFlush
     And AIP holds Straight

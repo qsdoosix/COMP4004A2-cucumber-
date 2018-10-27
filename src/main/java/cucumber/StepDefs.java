@@ -46,7 +46,7 @@ public class StepDefs {
 			assertEquals(game.isFHouse((game.player_hand)),true);
 		}else if(hand.equalsIgnoreCase("ThreeOfAKind")) {
 			assertEquals(game.is3oK((game.player_hand)),true);
-		}else if(hand.equalsIgnoreCase("TwoPair")) {
+		}else if(hand.equalsIgnoreCase("TwoPairs")) {
 			assertEquals(game.is2Pair((game.player_hand)),true);
 		}else if(hand.equalsIgnoreCase("Pair")) {
 			assertEquals(game.isPair((game.player_hand)),true);

@@ -129,6 +129,15 @@ public class Poker {
 		Poker game = new Poker("src/main/resources/Cards1.txt");
 	}
 
+	public void ChangeCard(int[] in) {
+		if(in[0]<1) {
+			return;
+		}
+		for(int i = 0; i < in[0];i++) {
+			enemy_hand[i]=drawCard();
+		}
+	}
+	
 	public int[] Analyse() {
 		Card[] hand=enemy_hand;
 		int[] nothing = {0,0,0,0};
@@ -152,13 +161,36 @@ public class Poker {
 			//Do nothing
 			return nothing;
 		}else{
-			re[1]=oneFromRFlush(hand);
+			re=oneFromRFlush(hand);
 			if(re[1]!=-1){
 				//So the hand is one card from Royal Flush
-				re[0]=1;
 				return re;
 			}
 			re=onefromFS(hand);
+			if(re[1]!=-1){
+				return re;
+			}
+			re=onefromFHouse(hand);
+			if(re[1]!=-1){
+				return re;
+			}
+			re=onefromflush(hand);
+			if(re[1]!=-1){
+				return re;
+			}
+			re=onefromstraight(hand);
+			if(re[1]!=-1){
+				return re;
+			}
+			re=onefromflush(hand);
+			if(re[1]!=-1){
+				return re;
+			}
+			re=change3oS(hand);
+			if(re[1]!=-1){
+				return re;
+			}
+			re=ThreeInSequence(hand);
 			if(re[1]!=-1){
 				return re;
 			}
@@ -355,13 +387,14 @@ public class Poker {
 		}
 	}
 */
-	public int onefromFHouse(Card[] in) {
+	public int[] onefromFHouse(Card[] in) {
 		// TODO Auto-generated method stub
 		//To make it one cards away from full house, it must have 2 pairs of cards and one single cards.
 		//Because the 3 cards with same number should be interpreted as one card away from 4 of a kind.
 		int pair=0;
 		countCard(in);
-		int re=-1;
+		int[] re={1,-1};
+		int[] err= {-1,-1};
 		for(int i = 0; i < cardnumbercount.length;i++) {
 			if(cardnumbercount[i]==3) {
 				pair=2;
@@ -370,7 +403,8 @@ public class Poker {
 						for(int b = 0; b < in.length;b++) {
 							//Search for the card with same number as its index in counter (Because the index in counter is the number of card)
 							if(a==in[b].number-1) {
-								return b;
+								re[1]=b;
+								return re;
 							}
 						}
 					}
@@ -381,7 +415,7 @@ public class Poker {
 				for(int a = 0; a < in.length;a++) {
 					//Search for the card with same number as its index in counter (Because the index in counter is the number of card)
 					if(i==in[a].number-1) {
-						re=a;
+						re[1]=a;
 					}
 				}
 			}
@@ -389,13 +423,15 @@ public class Poker {
 		if(pair==2) {
 			return re;
 		}else {
-			return -1;
+			return err;
 		}
 	}
-	public int oneFromRFlush(Card[] in) {
+	public int[] oneFromRFlush(Card[] in) {
 		// TODO Auto-generated method stub
 		countCard(in);
 		int cardinRF=0;
+		int[] re= {-1,-1};
+		int[] err= {-1,-1};
 		char maincolor='N';
 		String list= "SHDC";
 		for(int i = 0; i<cardcolorcount.length;i++) {
@@ -406,46 +442,24 @@ public class Poker {
 		}
 		if(maincolor=='N') {
 			//There isn't a color have 4 or more cards. So it must be away from flush, so it must not be a royal flush
-			return -1;
+			return err;
 		}
+		
 		for(int i=0;i<5;i++) {
-			if(cardnumbercount[(9+i)%13]>0) {
-				//How many cards are there in the sequence.
-				cardinRF+=cardnumbercount[(9+i)%13];
+			if(in[i].color!=maincolor||in[i].number>1&&in[i].number<10) {
+				re[1]=i;
+				return re;
 			}
 		}
-		if(cardinRF==5) {
-			//There is one card duplicated in the royal flush. (e.g. have two '10's)
-			//So search for the card not in the main color and change it
-			for(int i=0;i<in.length;i++) {
-				if(in[i].color!=maincolor) {
-					return i;
-				}
-			}
-		}else if(cardinRF==4) {
-			//There is one card outside the royal flush.(e.g. have a '5')
-			//So search for the card not in the royal flush sequence (10,J,Q,K,A).
-			for(int i = 0; i < in.length;i++) {
-				if( in[i].number!=1&&
-					in[i].number!=10&&
-					in[i].number!=11&&
-					in[i].number!=12&&
-					in[i].number!=13) {
-					return i;
-				}
-			}
-		}else {
-			//There are less than 4 cards in the royal flush sequence, so it can't be a royal flush
-			return -1;
-		}
-		return -1;
+		//There are less than 4 cards in the royal flush sequence, so it can't be a royal flush
+		return err;
 	}
 	public int[] change3oS(Card[] in) {
 		// TODO Auto-generated method stub
 		countCard(in);
 		char maincolor='N';
-		int[] wrong = {-1,-1};
-		int[] re= new int[2];
+		int[] wrong = {-1,-1,-1};
+		int[] re= {2,-1,-1};
 		int reindex=0;
 		String list= "SHDC";
 		for(int i = 0; i<cardcolorcount.length;i++) {
@@ -461,12 +475,12 @@ public class Poker {
 		for(int i = 0;i<in.length;i++) {
 			if(in[i].color!=maincolor) {
 				//This card is not one of the 3 cards at same color
-				if(reindex==re.length) {
+				if(reindex==re.length-1) {
 					//Not supposed to work, but it prevents the error input
 					return wrong;
 				}
 				//Save the index to the return value
-				re[reindex]=i;
+				re[reindex+1]=i;
 				reindex++;
 			}
 		}
@@ -477,8 +491,8 @@ public class Poker {
 		//This one i don't want to take the case that the 3 cards are not adjacent.
 		//(e.g) 3,5,6
 		//Because this is very unlikely to get a better hand in this case.
-		int[] wrong = {-1,-1};
-		int[] re= {-1,-1};
+		int[] wrong = {-1,-1,-1};
+		int[] re= {2,-1,-1};
 		countCard(in);
 		int cardindex=0;
 		for(int i = cardnumbercount.length-1;i>2;i--) {
@@ -492,17 +506,17 @@ public class Poker {
 					if(in[a].number<i-2) {
 						//If the card in input is smaller than the minimum card in sequence, then it should be changed.
 						if(cardindex>2) return wrong;//If there is more than 2 cards need to be changed, return false
-						re[cardindex]=a;
+						re[cardindex+1]=a;
 						cardindex++;
 					}else if(in[a].number>i+1) {
 						//if the card at index a is bigger than the maximum card in sequence, then it should be changed
 						if(cardindex>2) return wrong;
-						re[cardindex]=a;
+						re[cardindex+1]=a;
 						cardindex++;
 					}else if(cardnumbercount[in[a].number-1]>1) {
 						//If there is more card at same number as card at index a, then it should be changed
 						if(cardindex>2) return wrong;
-						re[cardindex]=a;
+						re[cardindex+1]=a;
 						cardindex++;
 						a++;//Skip the next card (which is expected to be same as this one)
 					}
