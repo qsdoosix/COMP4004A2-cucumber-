@@ -49,7 +49,6 @@ Scenario: AI Player have Royal flush and player have straight flush
 	And Player holds StraightFlush
 	And AIP holds RoyalFlush
 	
-	
 Scenario: Player have Royal flush and AI player have FullHouse
   Covered case: royal flush beats Full house, Not ordered royal flush,3+2 Full house
   At this moment, Every card has been placed in every place of hand.

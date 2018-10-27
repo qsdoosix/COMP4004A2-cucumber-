@@ -33,6 +33,38 @@ Covers: detecting straight flush with 2~3 gap, detecting straight flush not in o
 	And AIP holds StraightFlush
 	
 	Scenario: Player have Straight flush and AIP have 4 of a kind
+Covers: detecting 4 of a kind with 1+4, detecting straight flush not in order, Straight flush beats 4 of a kind
+	    Given  AIP have H9
+    And AIP have S10
+    And AIP have C10
+    And AIP have D10
+    And AIP have H10
+    When Player have C9
+    And Player have CK
+    And Player have C10
+    And Player have CQ
+    And Player have CJ
+    Then Player should win
+	And Player holds StraightFlush
+	And AIP holds FourOfAKind
+	
+Scenario: Player have Straight flush and AIP have Full house
+Covers: detecting straight flush with 2 gap, detecting straight flush not in order, Straight flush beats Full house
+	    Given  AIP have H10
+    And AIP have S10
+    And AIP have C10
+    And AIP have D9
+    And AIP have H9
+    When Player have C9
+    And Player have CK
+    And Player have C10
+    And Player have CQ
+    And Player have CJ
+    Then Player should win
+	And Player holds StraightFlush
+	And AIP holds FullHouse
+	
+	Scenario: Player have Straight flush and AIP have Full house
 Covers: detecting straight flush with 2 gap, detecting straight flush not in order, Straight flush beats 4 of a kind
 	    Given  AIP have H10
     And AIP have S10
@@ -48,18 +80,3 @@ Covers: detecting straight flush with 2 gap, detecting straight flush not in ord
 	And Player holds StraightFlush
 	And AIP holds FourOfAKind
 	
-		Scenario: Player have Straight flush and AIP have Full house
-Covers: detecting straight flush with 2 gap, detecting straight flush not in order, Straight flush beats 4 of a kind
-	    Given  AIP have H10
-    And AIP have S10
-    And AIP have C10
-    And AIP have D10
-    And AIP have H9
-    When Player have C9
-    And Player have CK
-    And Player have C10
-    And Player have CQ
-    And Player have CJ
-    Then Player should win
-	And Player holds StraightFlush
-	And AIP holds FourOfAKind

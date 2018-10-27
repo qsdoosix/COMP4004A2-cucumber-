@@ -9,31 +9,26 @@ import cucumber.api.java.en.When;
 
 public class StepDefs {
 	protected common.Poker game = new Poker();
-	@Given("^AIP have ([^\"]*)")
-	public void Give_AIP(String card) throws Exception {
-		game.givecardAIP(game.cardcreator(card));
-	}
-	@When("^Player have ([^\"]*)")
-	public void Give_Player(String card) throws Exception {
-		game.givecardP(game.cardcreator(card));
+	@Given("^([^\"]*) have ([^\"]*)")
+	public void Give_Card(String user, String card) throws Exception {
+		if(user.equalsIgnoreCase("AIP")) {
+			game.givecardAIP(game.cardcreator(card));
+		}else if(user.equalsIgnoreCase("Player")) {
+			game.givecardP(game.cardcreator(card));
+		}
 	}
 
-	@Then("^AIP should win$")
-	public void aip_should_win() throws Exception {
+	@Then("^([^\"]*) should win$")
+	public void decidewinner(String user) throws Exception {
 		game.displayHand(false);
 		game.displayHand(true);
 		game.compareHand();
-		assertEquals(game.winner,1);
+		if(user.equalsIgnoreCase("AIP")) {
+			assertEquals(game.winner,1);
+		}else if(user.equalsIgnoreCase("Player")) {
+			assertEquals(game.winner,0);
+		}
 	}
-	
-	@Then("^Player should win$")
-	public void player_should_win() throws Exception {
-		game.displayHand(false);
-		game.displayHand(true);
-		game.compareHand();
-		assertEquals(game.winner,0);
-	}
-
 	@Then("^Player holds ([^\"]*)")
 	public void Player_Has(String hand) throws Exception {
 		if(hand.equalsIgnoreCase("Royalflush")) {
