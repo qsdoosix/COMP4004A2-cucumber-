@@ -5,8 +5,8 @@ public class Poker {
 	//Because the player won't change more than 4 cards at a time, so 18 cards should be enough in the worse case. 
 	Card[] card_buffer=new Card[52];
 	//The hand for both player
-	Card[] player_hand= new Card[5];
-	Card[] enemy_hand = new Card[5];
+	public Card[] player_hand= new Card[5];
+	public Card[] enemy_hand = new Card[5];
 	int numcardplayer=0;
 	int numcardenemy=0;
 	int card_index=0;
@@ -158,16 +158,8 @@ public class Poker {
 				re[0]=1;
 				return re;
 			}
-			re[1]=onefromFS(hand);
+			re=onefromFS(hand);
 			if(re[1]!=-1){
-				re[0]=1;
-				return re;
-			}
-			int[] temp = oneFrom4oK(hand);
-			if(temp[0]!=-1) {
-				for(int i = 0; i < temp.length;i++) {
-					re[i]=temp[i];
-				}
 				return re;
 			}
 		}
@@ -252,9 +244,10 @@ public class Poker {
 		return cardnumbercount[0]==2&&cardnumbercount[1]<2;
 	}
 
-	public int onefromflush(Card[] in) {
+	public int[] onefromflush(Card[] in) {
 		// TODO Auto-generated method stub
 		int colorindex = -1;
+		int[] re = {1,-1};
 		char[] colorlist= {'S','H','D','C'};
 		countCard(in);
 		for(int i=0;i<cardcolorcount.length;i++) {
@@ -264,31 +257,33 @@ public class Poker {
 			}
 		}
 		if(colorindex<0) {
-			return -1;
+			return re;
 		}
 		for(int i = 0; i < in.length;i++) {
 			if(in[i].color!=colorlist[colorindex]) {
-				return i;
+				re[1]=i;
+				return re;
 			}
 		}
-		return -1;
+		return re;
 	}
-	public int onefromstraight(Card[] in) {
-		int re = -1;
+	public int[] onefromstraight(Card[] in) {
+		int[] err = {1,-1};
+		int[] re = {1,-1};
 		//A free card to represent the "missing" card can be any card in sequence.
 		boolean freeCard = true;
 		for(int i = 0; i < in.length-1;i++) {
 			if(in[i+1].number==in[i].number) {
 				//Two cards with same number, mark the first one as free card.
-				re=i;
+				re[1]=i;
 			}else if(in[i+1].number-in[i].number==2) {
 				//Two cards with a gap between them, try to find a free card to fix it.
 				if(!freeCard) {
-					return -1;
+					return err;
 				}
 				if(i==3) {
 					//If it is already the last card, then it will be changed
-					re=4;
+					re[1]=4;
 				}
 				freeCard=false;
 			}else if(in[i+1].number-in[i].number>2) {
@@ -296,39 +291,40 @@ public class Poker {
 				//So it must be either the first card or the last card
 				if(i==0) {
 					//The First card will be changed
-					re=0;
+					re[1]=0;
 				}
 				if(i==3) {
 					//The last card will be changed
-					re=4;
+					re[1]=4;
 				}
 			}
 		}
 		return re;
 	}
 
-	public int onefromFS(Card[] in) {
+	public int[] onefromFS(Card[] in) {
 		// TODO Auto-generated method stub
 		//Re-use the code one from flush and one from straight
+		int[] err={1,-1};
 		if(isStraightFlush(in)) {
-			return -1;
+			return err;
 		}
-		int r1=onefromflush(in);
-		int r2=onefromstraight(in);
+		int[] r1=onefromflush(in);
+		int[] r2=onefromstraight(in);
 		if(r1==r2) {
 			//If changing a card can make it became flush and straight at same time, then it must be one card from straight flush.
 			return r1;
 		}else {
 			//A special case that there may be two cards with same number but only one of them can be used for flush
-			if(r1>-1&&r2>-1) {
-				if(in[r1].number==in[r2].number) {
+			if(r1[1]>-1&&r2[1]>-1) {
+				if(in[r1[1]].number==in[r2[1]].number) {
 					return r1;
 				}
 			}
 		}
-		return -1;
+		return r1;
 	}
-	public int[] oneFrom4oK(Card[] in) {
+/*	public int[] oneFrom4oK(Card[] in) {
 		// TODO Auto-generated method stub
 		int[] wrong = {-1,-1};
 		int ones=0;
@@ -358,6 +354,7 @@ public class Poker {
 			return wrong;
 		}
 	}
+*/
 	public int onefromFHouse(Card[] in) {
 		// TODO Auto-generated method stub
 		//To make it one cards away from full house, it must have 2 pairs of cards and one single cards.
