@@ -11,6 +11,7 @@ Feature: Test the Royal flush beats any other hands on Player
     And Player have S6
     And Player have S7
     And Player have S8
+    And AIP analyze
     Then AIP should win
     And AIP holds RoyalFlush
     And Player holds StraightFlush
@@ -26,6 +27,7 @@ Feature: Test the Royal flush beats any other hands on Player
     And AIP have SQ
     And AIP have SJ
     And AIP have S10
+    And AIP analyze
     Then AIP should win
     And AIP holds RoyalFlush
     And Player holds FullHouse
@@ -41,6 +43,7 @@ Feature: Test the Royal flush beats any other hands on Player
     And AIP have SA
     And AIP have SJ
     And AIP have SK
+    And AIP analyze
     Then AIP should win
     And AIP holds RoyalFlush
     And Player holds FourOFAKind
@@ -56,6 +59,7 @@ Feature: Test the Royal flush beats any other hands on Player
     And AIP have CK
     And AIP have CQ
     And AIP have CA
+    And AIP analyze
     Then AIP should win
     And AIP holds RoyalFlush
     And Player holds Straight
@@ -71,6 +75,7 @@ Feature: Test the Royal flush beats any other hands on Player
     And AIP have DA
     And AIP have D10
     And AIP have DK
+    And AIP analyze
     Then AIP should win
     And AIP holds RoyalFlush
     And Player holds Flush
@@ -86,6 +91,7 @@ Feature: Test the Royal flush beats any other hands on Player
     And AIP have CJ
     And AIP have CA
     And AIP have CQ
+    And AIP analyze
     Then AIP should win
     And AIP holds RoyalFlush
     And Player holds ThreeOFAKind
@@ -101,6 +107,7 @@ Feature: Test the Royal flush beats any other hands on Player
     And AIP have DJ
     And AIP have D10
     And AIP have DA
+    And AIP analyze
     Then AIP should win
     And AIP holds RoyalFlush
     And Player holds TwoPairs
@@ -116,6 +123,7 @@ Feature: Test the Royal flush beats any other hands on Player
     And AIP have DJ
     And AIP have D10
     And AIP have DA
+    And AIP analyze
     Then AIP should win
     And AIP holds RoyalFlush
     And Player holds Pair
@@ -131,6 +139,7 @@ Feature: Test the Royal flush beats any other hands on Player
     And AIP have DJ
     And AIP have D10
     And AIP have DA
+    And AIP analyze
     Then AIP should win
     And AIP holds RoyalFlush
     And Player holds Single

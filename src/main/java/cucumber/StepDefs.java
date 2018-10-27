@@ -79,4 +79,14 @@ public class StepDefs {
 			assertEquals(hand.equalsIgnoreCase("Single"),true);
 		}
 	}
+	@When("^AIP analyze$")
+	public void Analyze() throws Exception {
+		//Change cards based on the AI analyze, then reset the card index in game for next run.
+	    game.ChangeCard(game.Analyse());
+	    game.resetcardindex();
+	}
+	@When("([^\"]*) is in deck$")
+	public void c_is_in_deck(String card) throws Exception {
+		game.addCardtoDeck(game.cardcreator(card));
+	}
 }

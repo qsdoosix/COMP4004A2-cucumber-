@@ -11,6 +11,7 @@ Feature: To test about straight flush
     And AIP have C10
     And AIP have CJ
     And AIP have CQ
+    And AIP analyze
     Then AIP should win
     And AIP holds StraightFlush
     And Player holds FourOfAKind
@@ -26,6 +27,7 @@ Feature: To test about straight flush
     And AIP have SJ
     And AIP have S10
     And AIP have S9
+    And AIP analyze
     Then AIP should win
     And AIP holds StraightFlush
     And Player holds FullHouse
@@ -41,6 +43,7 @@ Feature: To test about straight flush
     And AIP have D7
     And AIP have D4
     And AIP have D6
+    And AIP analyze
     Then AIP should win
     And AIP holds StraightFlush
     And Player holds Flush
@@ -56,6 +59,7 @@ Feature: To test about straight flush
     And AIP have H6
     And AIP have H7
     And AIP have H5
+    And AIP analyze
     Then AIP should win
     And AIP holds StraightFlush
     And Player holds Straight
@@ -71,6 +75,7 @@ Feature: To test about straight flush
     And AIP have H6
     And AIP have H7
     And AIP have H5
+    And AIP analyze
     Then AIP should win
     And AIP holds StraightFlush
     And Player holds threeofakind
@@ -86,6 +91,7 @@ Feature: To test about straight flush
     And AIP have H6
     And AIP have H7
     And AIP have H5
+    And AIP analyze
     Then AIP should win
     And AIP holds StraightFlush
     And Player holds twopairs
@@ -101,6 +107,7 @@ Feature: To test about straight flush
     And AIP have H6
     And AIP have H7
     And AIP have H5
+    And AIP analyze
     Then AIP should win
     And AIP holds StraightFlush
     And Player holds pair
@@ -116,6 +123,7 @@ Feature: To test about straight flush
     And AIP have H6
     And AIP have H7
     And AIP have H5
+    And AIP analyze
     Then AIP should win
     And AIP holds StraightFlush
     And Player holds single

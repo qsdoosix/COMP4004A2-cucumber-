@@ -760,4 +760,12 @@ public class Poker {
 		}
 		return new Card(c,n);
 	}
+	public void addCardtoDeck(Card c) {
+		card_buffer[card_index]=c;
+		card_index++;
+		num_card++;
+	}
+	public void resetcardindex() {
+		card_index=0;
+	}
 }
