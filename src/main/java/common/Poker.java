@@ -767,5 +767,8 @@ public class Poker {
 	}
 	public void resetcardindex() {
 		card_index=0;
+		for(int i = 0; i<card_buffer.length;i++) {
+			card_buffer[i]=null;
+		}
 	}
 }

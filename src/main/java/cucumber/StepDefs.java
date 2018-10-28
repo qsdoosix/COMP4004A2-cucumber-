@@ -80,6 +80,8 @@ public class StepDefs {
 		}
 	}
 	@When("^AIP analyze$")
+	//AI player analyze his hand and change according to the result.
+	//Because the cards in the deck is created on test and reset after test, Any tests that haven't create card and calls analyze means it haven't change any card(Or it will cause null pointer exception).
 	public void Analyze() throws Exception {
 		//Change cards based on the AI analyze, then reset the card index in game for next run.
 	    game.ChangeCard(game.Analyse());

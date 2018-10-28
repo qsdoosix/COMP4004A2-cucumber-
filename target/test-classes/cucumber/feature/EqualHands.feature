@@ -74,3 +74,18 @@ Feature: Test the winning condition when both player have equal hands.
     Then AIP should win
     And Player holds FourOfAKind
     And AIP holds FourOfAKind
+
+  Scenario: 6 AIP have FullHouse in smaller number than Player
+    Given AIP have H5
+    And AIP have D5
+    And AIP have C5
+    And AIP have S9
+    And AIP have H9
+    When Player have H6
+    And Player have D6
+    And Player have C6
+    And Player have S4
+    And Player have H4
+    Then Player should win
+    And Player holds FullHouse
+    And AIP holds FullHouse
