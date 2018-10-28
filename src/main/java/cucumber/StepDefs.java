@@ -84,11 +84,18 @@ public class StepDefs {
 	//Because the cards in the deck is created on test and reset after test, Any tests that haven't create card and calls analyze means it haven't change any card(Or it will cause null pointer exception).
 	public void Analyze() throws Exception {
 		//Change cards based on the AI analyze, then reset the card index in game for next run.
-	    game.ChangeCard(game.Analyse());
+		int[] re=game.Analyse();
+		System.out.print("Analyse result");
+		for(int i:re) {
+			System.out.print(i+", ");
+		}
+		System.out.print("\n");
+	    game.changeCard(true, re);
 	    game.resetcardindex();
 	}
 	@When("([^\"]*) is in deck$")
 	public void c_is_in_deck(String card) throws Exception {
 		game.addCardtoDeck(game.cardcreator(card));
+//		game.printdeck();
 	}
 }

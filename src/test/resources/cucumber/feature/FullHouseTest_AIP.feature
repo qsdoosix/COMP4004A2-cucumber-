@@ -1,6 +1,6 @@
 Feature: Test about AIP beat Player with full house
 
-  Scenario: 1 HTB has full house  beats Player flush
+  Scenario: 1 AIP has full house  beats Player flush
     Given Player have H2
     And Player have H6
     And Player have H3
@@ -16,7 +16,7 @@ Feature: Test about AIP beat Player with full house
     And AIP holds FullHouse
     And Player holds Flush
 
-  Scenario: 2 HTB has full house  beats Player straight
+  Scenario: 2 AIP has full house  beats Player straight
     Given Player have H3
     And Player have C4
     And Player have D5
@@ -32,7 +32,7 @@ Feature: Test about AIP beat Player with full house
     And AIP holds FullHouse
     And Player holds Straight
 
-  Scenario: 3 HTB has full house  beats Player 3 of a kind
+  Scenario: 3 AIP has full house  beats Player 3 of a kind
     Given Player have H3
     And Player have C3
     And Player have D3
@@ -48,7 +48,7 @@ Feature: Test about AIP beat Player with full house
     And AIP holds FullHouse
     And Player holds ThreeOfAKind
 
-  Scenario: 4 HTB has full house  beats Player two pairs
+  Scenario: 4 AIP has full house  beats Player two pairs
     Given Player have H3
     And Player have C3
     And Player have D6
@@ -64,7 +64,7 @@ Feature: Test about AIP beat Player with full house
     And AIP holds FullHouse
     And Player holds TwoPairs
 
-  Scenario: 5 HTB has full house  beats Player one pair
+  Scenario: 5 AIP has full house  beats Player one pair
     Given Player have H3
     And Player have C3
     And Player have C9
@@ -80,7 +80,7 @@ Feature: Test about AIP beat Player with full house
     And AIP holds FullHouse
     And Player holds Pair
 
-  Scenario: 6 HTB has full house  beats Player high card
+  Scenario: 6 AIP has full house  beats Player high card
     Given Player have H3
     And Player have C2
     And Player have D6

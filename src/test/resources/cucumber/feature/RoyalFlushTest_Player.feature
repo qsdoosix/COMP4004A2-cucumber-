@@ -55,11 +55,11 @@ Feature: Test the Royal flush beats any other hands on AIP
     And AIP have C6
     And AIP have S7
     And AIP have D8
-    When Player have D10
+    When Player have DA
     And Player have DJ
     And Player have DK
     And Player have DQ
-    And Player have DA
+    And Player have D10
     Then Player should win
     And Player holds RoyalFlush
     And AIP holds Straight

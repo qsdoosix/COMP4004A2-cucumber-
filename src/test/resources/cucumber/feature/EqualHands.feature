@@ -89,3 +89,154 @@ Feature: Test the winning condition when both player have equal hands.
     Then Player should win
     And Player holds FullHouse
     And AIP holds FullHouse
+
+  Scenario: 7 Two straights with the same rank for their highest card,  THEN highest suit of that highest card win
+    Given AIP have C6
+    And AIP have D5
+    And AIP have S4
+    And AIP have H3
+    And AIP have D2
+    When Player have H2
+    And Player have D3
+    And Player have H4
+    And Player have C5
+    And Player have S6
+    Then Player should win
+    And Player holds Straight
+    And AIP holds Straight
+
+  Scenario: 8 Two straights with distinct highest card, THEN highest card wins
+    Given AIP have C7
+    And AIP have D5
+    And AIP have S4
+    And AIP have H3
+    And AIP have D6
+    When Player have H2
+    And Player have D3
+    And Player have H4
+    And Player have C5
+    And Player have S6
+    Then AIP should win
+    And Player holds Straight
+    And AIP holds Straight
+
+  Scenario: 9 two pairs with the same highest pair for each participant, THEN highest suit of this highest pair wins
+    Given AIP have C7
+    And AIP have D7
+    And AIP have S4
+    And AIP have H4
+    And AIP have D5
+    When Player have C6
+    And Player have S4
+    And Player have D4
+    And Player have H7
+    And Player have S7
+    Then Player should win
+    And Player holds TwoPairs
+    And AIP holds TwoPairs
+
+  Scenario: 10 two pairs, with distinct highest pairs for the 2 participants, THEN highest suit highest pair wins
+    Given AIP have C6
+    And AIP have D6
+    And AIP have S5
+    And AIP have H4
+    And AIP have D4
+    When Player have C5
+    And Player have S4
+    And Player have D5
+    And Player have H3
+    And Player have S3
+    Then AIP should win
+    And Player holds TwoPairs
+    And AIP holds TwoPairs
+
+  Scenario: 11 Both player have 3 of a kind and the bigger triplet wins
+    Given AIP have H5
+    And AIP have D5
+    And AIP have C5
+    And AIP have S3
+    And AIP have H9
+    When Player have HA
+    And Player have DA
+    And Player have CA
+    And Player have S2
+    And Player have H6
+    Then Player should win
+    And Player holds ThreeOfAKind
+    And AIP holds ThreeOfAKind
+
+  Scenario: 12 one pair, with both of these pairs of equal rank, THEN highest suit of these pairs wins
+    Given AIP have CA
+    And AIP have DA
+    And AIP have CK
+    And AIP have S10
+    And AIP have H9
+    When Player have D3
+    And Player have C4
+    And Player have HA
+    And Player have SA
+    And Player have H6
+    Then Player should win
+    And Player holds Pair
+    And AIP holds Pair
+
+  Scenario: 13 one pair, with distinct-ranked pairs for the 2 participants, THEN highest pair wins
+    Given AIP have C7
+    And AIP have DA
+    And AIP have CK
+    And AIP have SA
+    And AIP have H9
+    When Player have S5
+    And Player have H4
+    And Player have C8
+    And Player have SQ
+    And Player have HQ
+    Then AIP should win
+    And Player holds Pair
+    And AIP holds Pair
+
+  Scenario: 14 both player have single card in same number, the player with higher suit wins
+    Given AIP have C7
+    And AIP have D5
+    And AIP have C2
+    And AIP have S3
+    And AIP have H9
+    When Player have S9
+    And Player have H4
+    And Player have C8
+    And Player have S2
+    And Player have H6
+    Then Player should win
+    And Player holds Single
+    And AIP holds Single
+
+  Scenario: 15 both player have single card, the player with larger card wins
+    Given AIP have C7
+    And AIP have D5
+    And AIP have CA
+    And AIP have S3
+    And AIP have H9
+    When Player have S9
+    And Player have H4
+    And Player have C8
+    And Player have S2
+    And Player have H6
+    Then AIP should win
+    And Player holds Single
+    And AIP holds Single
+    
+  Scenario: 16 flush, and the same rank for each of their 5 cards, THEN highest suit highest suit of highest card wins
+    Given AIP have C8
+    And AIP have C5
+    And AIP have C4
+    And AIP have C9
+    And AIP have CJ
+    When Player have SJ
+    And Player have S9
+    And Player have S4
+    And Player have S5
+    And Player have S8
+    Then Player should win
+    And Player holds Flush
+    And AIP holds Flush
+  

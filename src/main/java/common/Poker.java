@@ -141,7 +141,7 @@ public class Poker {
 	public int[] Analyse() {
 		Card[] hand=enemy_hand;
 		int[] nothing = {0,0,0,0};
-		int[] re = {0,0,0,0};
+		int[] re;
 		if(isRoyalFlush(hand)) {
 			//Do nothing
 			return nothing;
@@ -164,38 +164,48 @@ public class Poker {
 			re=oneFromRFlush(hand);
 			if(re[1]!=-1){
 				//So the hand is one card from Royal Flush
+				System.out.println("One from RF");
 				return re;
 			}
 			re=onefromFS(hand);
 			if(re[1]!=-1){
+				System.out.println("One from FS");
 				return re;
 			}
 			re=onefromFHouse(hand);
 			if(re[1]!=-1){
+				System.out.println("One from FH");
 				return re;
 			}
 			re=onefromflush(hand);
 			if(re[1]!=-1){
+				System.out.println("One from F");
 				return re;
 			}
 			re=onefromstraight(hand);
 			if(re[1]!=-1){
-				return re;
-			}
-			re=onefromflush(hand);
-			if(re[1]!=-1){
+				System.out.println("One from S");
 				return re;
 			}
 			re=change3oS(hand);
 			if(re[1]!=-1){
+				System.out.println("3os");
 				return re;
 			}
 			re=ThreeInSequence(hand);
 			if(re[1]!=-1){
+				System.out.println("S");
 				return re;
 			}
+			re=changePair(hand);
+			if(re[1]!=-1) {
+				System.out.println("Pair");
+				return re;
+			}
+			sortArray(hand);
+			int[] small3={3,0,1,2};
+			return small3;
 		}
-		return null;
 	}
 	public boolean isRoyalFlush(Card[] in) {
 		// TODO Auto-generated method stub
@@ -300,14 +310,16 @@ public class Poker {
 		return re;
 	}
 	public int[] onefromstraight(Card[] in) {
-		int[] err = {1,-1};
+		int[] err = {-1,-1};
 		int[] re = {1,-1};
+		int FC = -1;
+		
 		//A free card to represent the "missing" card can be any card in sequence.
 		boolean freeCard = true;
 		for(int i = 0; i < in.length-1;i++) {
 			if(in[i+1].number==in[i].number) {
 				//Two cards with same number, mark the first one as free card.
-				re[1]=i;
+				FC=i;
 			}else if(in[i+1].number-in[i].number==2) {
 				//Two cards with a gap between them, try to find a free card to fix it.
 				if(!freeCard) {
@@ -315,7 +327,7 @@ public class Poker {
 				}
 				if(i==3) {
 					//If it is already the last card, then it will be changed
-					re[1]=4;
+					FC=4;
 				}
 				freeCard=false;
 			}else if(in[i+1].number-in[i].number>2) {
@@ -323,14 +335,16 @@ public class Poker {
 				//So it must be either the first card or the last card
 				if(i==0) {
 					//The First card will be changed
-					re[1]=0;
-				}
-				if(i==3) {
+					FC=0;
+				}else if(i==3) {
 					//The last card will be changed
-					re[1]=4;
+					FC=4;
+				}else {
+					return err;
 				}
 			}
 		}
+		re[1]=FC;
 		return re;
 	}
 
@@ -447,6 +461,7 @@ public class Poker {
 		
 		for(int i=0;i<5;i++) {
 			if(in[i].color!=maincolor||in[i].number>1&&in[i].number<10) {
+				re[0]=1;
 				re[1]=i;
 				return re;
 			}
@@ -548,7 +563,7 @@ public class Poker {
 		int cardstoChange=in[0];
 		if(isEnemy) {
 			System.out.println("\nAIP is exchanging hands.\n"+cardstoChange+" cards to be dropped:");
-			for(int i = 1;i<in.length;i++) {
+			for(int i = 1;i<in[0]+1;i++) {
 				System.out.print("  "+enemy_hand[in[i]]);
 				enemy_hand[in[i]]=drawCard();
 				System.out.println(" replaced by "+enemy_hand[in[i]]);
@@ -556,7 +571,7 @@ public class Poker {
 			enemy_hand=sortArray(enemy_hand);
 		}else{
 			System.out.println("\nPlayer is exchanging hands.\n"+cardstoChange+" cards to be dropped:");
-			for(int i = 1;i<in.length;i++) {
+			for(int i = 1;i<in[0];i++) {
 				System.out.println("  "+player_hand[in[i]]);
 				player_hand[in[i]]=drawCard();
 				System.out.println(" replaced by "+player_hand[in[i]]);
@@ -611,6 +626,35 @@ public class Poker {
 		}
 		//This return is not supposed to be used
 		return null;
+	}
+	public int[] changePair(Card[] in) {
+		countCard(in);
+		int pairNumber=-1;
+		int[] wrong = {-1,-1,-1,-1};
+		int[] re= {3,-1,-1,-1};
+		int reindex=0;
+		for(int i = 0; i<cardnumbercount.length;i++) {
+			if(cardnumbercount[i]==2) {
+				pairNumber=i+1;
+			}
+		}
+		if(pairNumber==-1) {
+			//There isn't a color have 3 cards. So it's not what we are looking for
+			return wrong;
+		}
+		for(int i = 0;i<in.length;i++) {
+			if(in[i].number!=pairNumber) {
+				//This card is not one of the 3 cards at same color
+				if(reindex==re.length-1) {
+					//Not supposed to work, but it prevents the error input
+					return wrong;
+				}
+				//Save the index to the return value
+				re[reindex+1]=i;
+				reindex++;
+			}
+		}
+		return re;
 	}
 	public Card maxCard(Card[]in) {
 		//Returns the max number among input cards
@@ -761,12 +805,18 @@ public class Poker {
 		return new Card(c,n);
 	}
 	public void addCardtoDeck(Card c) {
-		card_buffer[card_index]=c;
-		card_index++;
+		card_buffer[num_card]=c;
 		num_card++;
+	}
+	public void printdeck() {
+		System.out.println("Cards in deck:");
+		for(Card c:card_buffer) {
+			System.out.print(c+", ");
+		}
 	}
 	public void resetcardindex() {
 		card_index=0;
+		num_card=0;
 		for(int i = 0; i<card_buffer.length;i++) {
 			card_buffer[i]=null;
 		}
